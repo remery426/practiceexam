@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Product page</title>
+  </head>
+  <body>
+    <h1> Welcome to the products page </h1>
+    <h3> The following have {{item.name}} in their wishlist </h3>
+        <ul>
+          {% for i in item %}
+            {% for name in i.wishlist.all %}
+            <li>{{name.username}}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+
+
+  </body>
+</html>

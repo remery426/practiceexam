@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+  </head>
+  <body>
+  <a href="wishlist_app/logout">Logout</a>
+  <h1> Welcome to your Dashboard {{request.session.thisuser}}</h1>
+
+    <h1>Your wishlist:</h1>
+    <table>
+      <tr>
+        <th> Product</th>
+        <th> Added By </th>
+        <th> Added At </th>
+        <th>Added by </th>
+
+      </tr>
+    {% for wish in wishlist.all %}
+      <tr>
+        <th><a href="wishlist_app/product_page/{{wish.id}}">{{wish.name}}</a></th>
+        <th> {{wish.user.username}}</th>
+        <th> {{wish.created_at}}</th>
+      {% if wish.user.username == request.session.thisuser %}
+      <th><button type="button" name="button"><a href="wishlist_app/delete/{{wish.id}}">Delete</a></button></th>
+      {% endif %}
+      {% if wish.user.username != request.session.thisuser %}
+      <th><button type="button" name="button"><a href="wishlist_app/remove/{{wish.id}}">Remove from wishlist</a></button></th>
+      {% endif %}
+    {% endfor %}
+    </table>
+    <a href="wishlist_app/create_page">Create a new item</a>
+    <h1> Other peoples wishlist </h1>
+    <table>
+      <tr>
+        <th> Product</th>
+        <th> Added By </th>
+        <th> Added At </th>
+        <th>Added by </th>
+        <th> Add to your </th>
+      </tr>
+      {% for product in all_products %}
+        {% if product not in wishlist.all %}
+          <tr>
+            <th>{{product.name}}</th>
+            <th> {{product.user.username}}</th>
+            <th> {{product.created_at}}</th>
+            <th> <a href="wishlist_app/add/{{product.id}}"><button type="button" name="button">Add</button></a>
+          </tr>
+          {% endif %}
+      {% endfor %}
+
+    </table>
+  </body>
+</html>
